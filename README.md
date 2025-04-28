@@ -13,23 +13,17 @@ Output: application/gzip
 Error Fixed: Renamed the datatype, fastqs.gz TO fastersanger
 saved new and ran FASTQC again
 
-Step 3: Allignment to refrence genome (hg38), created BAM file using BWA-MEM tool
+Step 3: Allignment to refrence genome (hg19), created BAM file using BWA-MEM tool
 Input: your fastersanger files (s)
 Ouput: BAM file created 
 
-Step 4: Sort and index the BAM file
+Step 4: Sort and
 
 Type:Samtool sort
 click "sort BAM dataset"
 set the following: "BAM dataset to sort" --> your BAM file (output for allignment)
 click execute 
     #sorted BAM = reads are on order by genomic cordinates
-    
-Type: Samtool index
-click "Index BAM" 
-set the following: "BAM file to Index" --> the sorted BAM from the previous step
-click execute 
-    #Indexed BAM = Quick access to regions for variant calling
 
 Step 5:Post Allignment full QC 
 
