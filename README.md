@@ -1,9 +1,9 @@
 # Pipeline_Galaxy
 
-Step 1:
+**Step 1:**
 Upload: RMH200SolidBRCA_Blend-T_S185_R1_001.fastq and RMH200SolidBRCA_Blend-T_S185_R2_001.fastq
 
-Step 2: Run FASTQ QC metric
+**step 2**  Run FASTQ QC metric
 input: RMH200SolidBRCA_Blend-T_S185_R1_001.fastq on the FASTQ Read Quality report tool
 Error occured: FASTQC is expecting a valid .gz file, but its trying to unzip it and hitting data that doesnt look like a GZIP-compressed content
 Output: application/gzip 
@@ -13,11 +13,12 @@ Output: application/gzip
 Error Fixed: Renamed the datatype, fastqs.gz TO fastersanger
 saved new and ran FASTQC again
 
-Step 3: Allignment to refrence genome (hg19), created BAM file using BWA-MEM tool
+**Step 3:** Allignment to refrence genome (hg19), created BAM file using BWA-MEM tool
 Input: your fastersanger files (s)
 Ouput: BAM file created 
+        #BWA-MEM used to align R1 and R2 to a reference genome, output in BAM format
 
-Step 4: Sort and
+**Step 4:** Sort 
 
 Type:Samtool sort
 click "sort BAM dataset"
@@ -25,14 +26,24 @@ set the following: "BAM dataset to sort" --> your BAM file (output for allignmen
 click execute 
     #sorted BAM = reads are on order by genomic cordinates
 
-Step 5:Post Allignment full QC 
+**Step 5**:Post Allignment QC 
 
-A) Input: Use tool Mark Duplicate, BAM sorted file used
+Type:Samtools idxstats
+Input: Sorted BAM file
+Output: Tabular format 
 
-B) Qualimap BAM QC
-Input: your duplicate-marked BAM file
-Refrence Genome = same one used during allignment
+Type:Samtools flagstat
+Input:Sorted BAM file
+Output: metrics.txt format with QC values 
 
+Type: Picard MarkDuplicates
+Input: BAM from BWA-MEM 
+        # parameters used:
+        Remove duplicates? No → This is what you want. It will mark duplicates (flag them), not delete them.
+        Assume sorted? Yes → Good. Your BAM has already been sorted (step 8).
+        Scoring strategy: SUM_OF_BASE_QUALITIES → Default and recommended. It keeps the best-quality read as the non-duplicate.
+Output: Deduplicated BAM where duplicates are marked (flagged, not removed)
 
+**Step 6: MultiQC** - It aggregates results from many bioinformatics tools (like FastQC, Samtools, Picard, etc.) into a single report. This helps spot trends, issues, or anomalies across sample
 
 
