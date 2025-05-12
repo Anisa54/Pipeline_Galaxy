@@ -46,4 +46,4 @@ Output: Deduplicated BAM where duplicates are marked (flagged, not removed)
 
 **Step 6: MultiQC** - It aggregates results from many bioinformatics tools (like FastQC, Samtools, Picard, etc.) into a single report. This helps spot trends, issues, or anomalies across sample
 
-
+Intervals file: BRCADirect.v1.0.bed.intervals
